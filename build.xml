@@ -17,6 +17,7 @@
   <target name="clean">
     <delete dir="class" />
     <delete dir="report" />
+    <delete dir="doc" />
     <delete file="jacoco.exec" />
   </target>
   <target name="test" depends="build">
