@@ -17,6 +17,7 @@ package fi.jyu.antkaij.calc;
 
 import static java.lang.Character.digit;
 import static java.lang.Character.isDigit;
+import static java.lang.Character.isWhitespace;
 
 public class Calc {
 
@@ -79,7 +80,7 @@ public class Calc {
             }
         }
         return a;
-    } 
+    }
 
     /** Computes the integer value of a single integer constant, or
         of an arithmetical expression in parentheses. */
@@ -108,16 +109,19 @@ public class Calc {
 
     /** Determines whether the end of input has been reached. */
     private boolean endOfInput() {
+        skipWhitespace();
         return inx >= input.length;
     }
 
     /** Returns (but does not mark read) the next input character. */
     private char peekChar() {
+        skipWhitespace();
         return input[inx];
     }
 
     /** Returns (and marks read) the next input character. */
     private char getChar() {
+        skipWhitespace();
         return input[inx++];
     }
 
@@ -127,6 +131,7 @@ public class Calc {
         the return value is arbitrary.
     */
     private int getInt() {
+        skipWhitespace();
         int rv = 0;
         do {
             rv = 10 * rv + digit(input[inx], 10);
@@ -134,6 +139,11 @@ public class Calc {
         } while (inx < input.length &&
                  isDigit(input[inx]));
         return rv;
+    }
+
+    /** If the next input characters are whitespace, marks them read. */
+    private void skipWhitespace() {
+        while (inx < input.length && isWhitespace(input[inx])) inx++;
     }
 
     /** Throws a ParseException indicating that the next input character
