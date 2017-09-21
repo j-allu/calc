@@ -48,4 +48,11 @@
       <html destdir="report"/>
     </jacoco:report>
   </target>
+  <target name="javadoc">
+    <javadoc sourcepath="src" destdir="doc" access="private">
+      <classpath>
+        <pathelement location="${junitjar}" />
+      </classpath>
+    </javadoc>
+  </target>
 </project>

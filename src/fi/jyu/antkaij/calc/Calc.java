@@ -20,11 +20,13 @@ import static java.lang.Character.isDigit;
 
 public class Calc {
 
+    /** Computes the integer value of the given arithmetical expression. */
     public static int compute(String s) {
         Calc c = new Calc(s);
         return c.compute();
     }
-    
+
+    /** Computes the integer value of the remaining arithmetical expression. */
     private int compute() {
         int a = computeTerm();
         while (!endOfInput()) {
@@ -44,6 +46,8 @@ public class Calc {
         return a;
     }
 
+    /** Computes the integer value of the remaining arithmetical expression,
+        up to (but not including) the next + or - sign. */
     private int computeTerm() {
         int a = computeFactor();
         while (!endOfInput() && (peekChar() == '*' || peekChar() == '/')) {
@@ -63,6 +67,8 @@ public class Calc {
         return a;
     } 
 
+    /** Computes the integer value of a single integer constant, or
+        of an arithmetical expression in parentheses. */
     private int computeFactor() {
         if (peekChar() == '(') {
             getChar();
@@ -73,26 +79,39 @@ public class Calc {
         return getInt();
     }
 
-
+    /** The full input string. */
     private final char[] input;
+    /** Index to input indicating the next character not yet read. */
     private int inx = 0;
 
+    /** Initializes the calculator object.
+
+        @param s the input string
+    */
     private Calc(String s) {
         input = s.toCharArray();
     }
-    
+
+    /** Determines whether the end of input has been reached. */
     private boolean endOfInput() {
         return inx >= input.length;
     }
 
+    /** Returns (but does not mark read) the next input character. */
     private char peekChar() {
         return input[inx];
     }
 
+    /** Returns (and marks read) the next input character. */
     private char getChar() {
         return input[inx++];
     }
 
+    /** Returns the integer constant that the next input characters comprise,
+        and marks those characters read.
+        If  the next input character does not start an integer constant,
+        the return value is arbitrary.
+    */
     private int getInt() {
         int rv = 0;
         do {
@@ -103,6 +122,11 @@ public class Calc {
         return rv;
     }
 
+    /** Throws a ParseException indicating that the next input character
+        is not what was expected
+
+        @param what a string describing the expected next character
+    */
     private void unexpected(String what) {
         if (endOfInput()) {
             throw new ParseException("premature end of input, expected " +
