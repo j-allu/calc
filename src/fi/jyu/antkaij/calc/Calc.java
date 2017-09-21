@@ -20,6 +20,20 @@ import static java.lang.Character.isDigit;
 
 public class Calc {
 
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("No arguments given.");
+            System.exit(1);
+        }
+        StringBuilder sb = new StringBuilder(args[0]);
+        for (int i = 1; i < args.length; i++) {
+            sb.append(' ');
+            sb.append(args[i]);
+        }
+        int res = compute(sb.toString());
+        System.out.println(res);
+    }
+
     /** Computes the integer value of the given arithmetical expression. */
     public static int compute(String s) {
         Calc c = new Calc(s);
