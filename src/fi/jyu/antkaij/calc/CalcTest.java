@@ -29,4 +29,16 @@ public class CalcTest {
     public void testError() {
         Calc.compute("1!");
     }
+
+    @Test(expected=ParseException.class)
+    public void testError2() {
+        Calc.compute("1)");
+    }
+
+    @Test
+    public void testParens() {
+        assertEquals(20, Calc.compute("(2+3)*4"));
+    }
+
+
 }

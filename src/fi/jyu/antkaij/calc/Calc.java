@@ -24,13 +24,16 @@ public class Calc {
     /** Computes the integer value of the given arithmetical expression. */
     public static int compute(String s) {
         Calc c = new Calc(s);
-        return c.compute();
+        int rv = c.compute();
+        if (!c.endOfInput()) c.unexpected("end of input");
+        return rv;
     }
 
-    /** Computes the integer value of the remaining arithmetical expression. */
+    /** Computes the integer value of the remaining arithmetical
+     * expression, up to an (unbalanced) parenthesis. */
     private int compute() {
         int a = computeTerm();
-        while (!endOfInput()) {
+        while (!endOfInput() && peekChar() != ')') {
             switch (peekChar()) {
             case '+':
                 getChar();
